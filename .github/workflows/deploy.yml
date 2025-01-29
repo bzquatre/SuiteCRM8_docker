@@ -1,0 +1,46 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Pull Code in Server
+        uses: appleboy/ssh-action@master        
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SERVER_SSH_PORT }}
+          script: | 
+              cd /home/bzquatre/SuiteCRM8_docker && git pull origin main
+
+
+      - name: Build docker Compose
+        uses: appleboy/ssh-action@master        
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SERVER_SSH_PORT }}
+          script: | 
+              cd /home/bzquatre/SuiteCRM8_docker && docker-compose build
+
+
+      - name:  Up Docker Compose
+        uses: appleboy/ssh-action@master        
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SERVER_SSH_PORT }}
+          script: | 
+              cd /home/bzquatre/SuiteCRM8_docker  && docker-compose up -d

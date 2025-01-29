@@ -1,7 +1,7 @@
 FROM ubuntu:22.04
 #Ubuntu 22.04 supported until APR 2032 - https://ubuntu.com/about/release-cycle
 #PHP 8.2 supported until 31 Dec 2026 - https://www.php.net/supported-versions.php
-LABEL org.opencontainers.image.authors="jon@titmus.me"
+LABEL org.opencontainers.image.authors="bzquatre@gmail.com"
 
 ENV TZ=Europe/London
 ARG DEBIAN_FRONTEND=noninteractive
@@ -33,8 +33,7 @@ RUN a2enconf php8.2-fpm
 RUN apt install -y php8.2-xml php8.2-mbstring
 RUN apt install -y zlib1g-dev libxml2-dev
 
-RUN apt-get update && apt-get upgrade -y && \
-    apt-get install -y nodejs \
+RUN apt-get install -y nodejs \
     npm
 
 RUN npm install -g @angular/cli
