@@ -21,7 +21,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_SSH_PORT }}
           script: | 
-              cd /home/bzquatre/SuiteCRM8_docker && git pull origin main
+              cd /home/bzquatre/SuiteCRM8_docker && git pull origin master
 
 
       - name: Build docker Compose
