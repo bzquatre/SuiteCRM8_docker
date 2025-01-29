@@ -1,3 +1,5 @@
+version: '3'
+
 services:
   suitecrm:
     build: ./
@@ -44,20 +46,7 @@ services:
     networks:
       - suitecrm_net
     restart: on-failure
-  
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    links:
-      - mysql_crm
-    ports:
-      - 8181:80
-    environment:
-      - PMA_HOST=mysql_crm
-      - PMA_USER=suitecrm
-      - PMA_PASSWORD=suitecrm
-    networks:
-      - suitecrm_net
-    restart: no
+ 
 networks:
     suitecrm_net:
         driver: bridge
